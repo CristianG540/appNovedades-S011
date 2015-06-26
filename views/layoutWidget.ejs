@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AppNovedades</title>
+
+  <!-- Viewport mobile tag for sensible mobile support -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <!--STYLES-->
+  <link rel="stylesheet" href="/styles/bootstrap.css">
+  <link rel="stylesheet" href="/styles/select2.min.css">
+  <link rel="stylesheet" href="/styles/bootstrap-tagsinput.css">
+  <link rel="stylesheet" href="/styles/importer.css">
+  <!--STYLES END-->
+</head>
+
+<body>
+<%- body %>
+
+
+<!--TEMPLATES-->
+
+<!--TEMPLATES END-->
+
+
+<!--SCRIPTS-->
+<script src="/js/dependencies/sails.io.js"></script>
+<script src="/js/dependencies/jquery.js"></script>
+<script src="/js/dependencies/underscore.js"></script>
+<script src="/js/dependencies/bootstrap.js"></script>
+<script src="/js/dependencies/typeahead.bundle.min.js"></script>
+<script src="/js/dependencies/select2/select2.full.min.js"></script>
+<script src="/js/dependencies/select2/i18n/es.js"></script>
+<script src="/js/dependencies/bootstrap-tagsinput.js"></script>
+<script src="/js/dependencies/jquery.charactercounter.js"></script>
+<script src="/js/dependencies/jquery.validate.js"></script>
+<script src="/js/institutionSelector.js"></script>
+<!--SCRIPTS END-->
+
+<!-- Google Maps API -->
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
+
+<!-- Handle location in tweets -->
+<script type="text/javascript">
+  $(document).on('click', '#get-tweet-location', function() {
+    var btn = $(this);
+    btn.button('loading');
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        $.ajax({
+          type: 'GET',
+          dataType: "json",
+          url: "http://maps.googleapis.com/maps/api/geocode/json?latlng=" +
+          position.coords.latitude + "," + position.coords.longitude + "&sensor=false&language=en",
+          data: {},
+          success: function(data) {
+            $.each(data['results'], function(i, val) {
+              if (val['types'][0] == 'locality' && val['types'][1] == 'political') {
+                $('#tweet-location').html('<button type="button" id="remove-tweet-location" class="btn btn-info" data-toggle="button">' + val['formatted_address'] + '</button><input type="hidden" name="location" value="' + val['formatted_address'] + '" />');
+              }
+            });
+          },
+          error: function () { btn.button('reset'); }
+        });
+        btn.button('complete');
+      });
+    } else {
+      btn.button('reset');
+    }
+  });
+
+  $(document).on('click', '#remove-tweet-location', function() {
+    $('#tweet-location').html('<button type="button" data-loading-text="Loading..." id="get-tweet-location" class="btn btn-primary">Location</button>');
+  });
+</script>
+
+<!-- Handle file upload field in user settings -->
+<script>
+  $(document).on('change', '.btn-file :file', function() {
+    var input = $(this);
+    var numFiles = input.get(0).files ? input.get(0).files.length : 1;
+    var label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+    input.trigger('fileselect', [numFiles, label]);
+  });
+
+  $(document).ready( function() {
+    $('.btn-file :file').on('fileselect', function(event, numFiles, label) {
+      var input = $(this).parents('.input-group').find(':text');
+      var log = numFiles > 1 ? numFiles + ' files selected' : label;
+
+      if (input.length) {
+        input.val(log);
+      }
+    });
+  });
+</script>
+
+<!-- Handle tags in search -->
+<script>
+  $(document).ready( function() {
+    $('#search-bar').tagsinput({
+      tagClass: function(item) {
+        item = item.trim();
+        if (item[0] == '@') {
+          return 'label label-success';
+        } else if (item[0] == '#') {
+          return 'label label-info';
+        } else {
+          return 'label label-warning'
+        }
+      },
+      confirmKeys: [13, 9, 32]
+    });
+  });
+</script>
+
+<!-- Handle form validation -->
+<script>
+  $(document).ready( function() {
+    $('#login_form').validate();
+    $('#sign_up_form').validate({
+      rules: {
+        username: {
+          required: true,
+          maxlength: 20,
+          minlength: 5
+        },
+        password_confirmation: {
+          equalTo: '#password'
+        }
+      }
+    });
+    $('#profile_settings_form').validate({
+      rules: {
+        password_confirmation: {
+          equalTo: '#password'
+        }
+      }
+    });
+  });
+</script>
+
+<!-- Handle feed refresh -->
+<script>
+  $(document).ready( function() {
+    var pathname = window.location.pathname; // Returns path only
+    var institute = pathname.substr(pathname.lastIndexOf('/') + 1);
+    setInterval(function() {
+      $.get("/feed/lastwidget/"+institute, function(data) {
+        $("#tweets-refresh").html(data);
+      });
+    }, 30000);
+  });
+</script>
+</body>
+</html>
