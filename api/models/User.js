@@ -25,6 +25,7 @@ function saveResized(path, size, name) {
         .resize(size, size)
         .write(__dirname + "/../../public/photos/" + size + "/" + name + ".jpg", function(err){
             if(err){ console.log('Err: ',err); }
+            next();
         });
     });
   };
