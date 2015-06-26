@@ -119,7 +119,7 @@ module.exports = {
       }
     }
 
-    req.file('avatar').upload({
+    req.file('photo').upload({
         maxBytes: 1000000
       },
       function whenDone(err, uploadedFiles) {
