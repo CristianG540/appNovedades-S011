@@ -23,7 +23,9 @@ function saveResized(path, size, name) {
     fs.mkdir(__dirname + '/../../public/photos/' + size, function(err) {
       gm(path)
         .resize(size, size)
-        .write(__dirname + "/../../public/photos/" + size + "/" + name + ".jpg", next);
+        .write(__dirname + "/../../public/photos/" + size + "/" + name + ".jpg", function(err){
+            if(err){ console.log('Err: ',err); }
+        });
     });
   };
 }
