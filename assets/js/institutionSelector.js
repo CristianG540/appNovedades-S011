@@ -4,16 +4,6 @@
 
 $(document).ready(function () {
 
-  // constructs the suggestion engine
-  var institutionData = new Bloodhound({
-    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('institucionEducativa'),
-    queryTokenizer: Bloodhound.tokenizers.whitespace,
-    prefetch: '/data/institutionsNoDuplicate.json',
-    remote: {
-      url: '/institutionData/noDuplicate'
-    }
-  });
-
   $('#institution').select2({
     ajax: {
       url: '/institutionData/noDuplicate',

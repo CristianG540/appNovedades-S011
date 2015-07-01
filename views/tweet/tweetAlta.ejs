@@ -5,13 +5,13 @@
 <% } %>
 <% _.each(data.tweets, function(tweet) { %>
   <% if(tweet.priority == 1){ %>
-    <div class="media" id="<%= tweet.priority == 1 ? 'priority-alta' : tweet.priority == 2 ? 'priority-media' : 'priority-baja' %>">
+    <div class="media" id="priority-alta">
         <div class="media-body">
             <div class="media-heading">
                 <div class="row">
                   <div class="col-xs-4">
                     <a class="" href="/<%= tweet.author.username %>">
-                      <img class="media-object" src="/photo/show/<%- tweet.author.id %>/64" alt="<%= tweet.author.username %>">
+                      <img class="media-object img-circle" src="/photo/show/<%- tweet.author.id %>/64" alt="<%= tweet.author.username %>">
                     </a>
                   </div>
                   <div class="col-xs-8">
