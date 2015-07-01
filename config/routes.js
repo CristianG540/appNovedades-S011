@@ -49,9 +49,12 @@ module.exports.routes = {
   'GET /feed/widget/:institution': 'FeedController.widget',
   'GET /institutionData': 'InstitutionDataController.index',
   'GET /institutionData/noDuplicate': 'InstitutionDataController.noDuplicate',
-  '/:username': 'UserController.show',
   'POST /user/update': 'UserController.update',
-  'POST /user/destroy': 'UserController.destroy'
+  'POST /user/destroy': 'UserController.destroy',
+  'POST /recoverPass': 'SettingsController.recoverPass',
+  'GET /recoverPass': 'SettingsController.indexRecoverPass',
+
+  '/:username': 'UserController.show'
 
 
   /***************************************************************************

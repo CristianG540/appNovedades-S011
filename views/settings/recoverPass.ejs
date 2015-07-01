@@ -1,0 +1,23 @@
+<div class="container content">
+  <div class="container narrow">
+
+    <hgroup>
+      <h1>forgot your password?</h1>
+      <h2>don't worry. it happens to the best of us.</h2>
+    </hgroup>
+
+
+
+
+    <form action="/recoverPass" class="login-forms" method="post">
+      <label for="name_email">your email address or npm username</label>
+      <input type="text" id="name_email" name="name_email" autocorrect="off" autocapitalize="off" autofocus="">
+
+      <input type="hidden" name="_csrf" value="<%= _csrf %>">
+      <input class="full-width" type="submit" value="email me a recovery link">
+    </form>
+
+
+  </div>
+
+</div>
