@@ -51,8 +51,11 @@ module.exports.routes = {
   'GET /institutionData/noDuplicate': 'InstitutionDataController.noDuplicate',
   'POST /user/update': 'UserController.update',
   'POST /user/destroy': 'UserController.destroy',
-  'POST /recoverPass': 'SettingsController.recoverPass',
-  'GET /recoverPass': 'SettingsController.indexRecoverPass',
+  'POST /recoverPass': 'RecoverPassController.recoverPass',
+  'GET /recoverPass': 'RecoverPassController.index',
+  'GET /reset/:token': 'RecoverPassController.resetIndex',
+  'POST /reset/:token': 'RecoverPassController.resetPass',
+
 
   '/:username': 'UserController.show'
 

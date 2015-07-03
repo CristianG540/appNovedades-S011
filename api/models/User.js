@@ -94,7 +94,12 @@ module.exports = {
       required: true,
       defaultsTo: false
     },
-
+    resetPasswordToken: {
+      type: 'string'
+    },
+    resetPasswordExpires: {
+      type: 'integer'
+    },
     following: {
       type: 'array',
       defaultsTo: []

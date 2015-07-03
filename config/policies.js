@@ -32,9 +32,11 @@ module.exports.policies = {
     'index': ['flash', 'notAuthenticated'],
   },
 
-  SettingsController: {
-    'indexRecoverPass': ['flash', 'notAuthenticated'],
-    'recoverPass': ['flash', 'notAuthenticated']
+  RecoverPassController: {
+    'index': ['flash', 'notAuthenticated'],
+    'recoverPass': ['flash', 'notAuthenticated'],
+    'resetIndex': ['flash', 'notAuthenticated'],
+    'resetPass': ['flash', 'notAuthenticated']
   },
 
   InstitutionData: {

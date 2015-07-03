@@ -1,0 +1,15 @@
+<form method="POST" id="reset_pass_form">
+  <legend>Reset Password</legend>
+  <div class="form-group">
+    <label for="password">Nueva Constraseña</label>
+    <input type="password" name="password" id="password" value="" placeholder="Nueva Constraseña" autofocus="autofocus" class="form-control"/>
+  </div>
+  <div class="form-group">
+    <label for="confirm">Confirme la Contraseña</label>
+    <input type="password" name="confirm" id="confirm" value="" placeholder="Confirme la Contraseña" class="form-control"/>
+  </div>
+  <div class="form-group">
+    <input type="hidden" name="_csrf" value="<%= _csrf %>">
+    <button type="submit" class="btn btn-primary">Actualizar</button>
+  </div>
+</form>
