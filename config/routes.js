@@ -55,6 +55,7 @@ module.exports.routes = {
   'GET /recoverPass': 'RecoverPassController.index',
   'GET /reset/:token': 'RecoverPassController.resetIndex',
   'POST /reset/:token': 'RecoverPassController.resetPass',
+  'GET /resumen': 'FeedController.resumen',
 
 
   '/:username': 'UserController.show'

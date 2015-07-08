@@ -24,6 +24,7 @@
     "machinepack-emailaddresses": "^0.4.0",
     "machinepack-mandrill": "^1.0.0",
     "moment": "^2.10.3",
+    "node-schedule": "^0.2.9",
     "passport": "^0.2.2",
     "passport-local": "^1.0.0",
     "rc": "~0.5.0",

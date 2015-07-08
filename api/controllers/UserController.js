@@ -53,7 +53,7 @@ function tweets(user, res, next) {
       moment: moment
     });
   });
-};
+}
 
 function inflateUsers(userIds, callback) {
   User.find().where({
@@ -61,7 +61,7 @@ function inflateUsers(userIds, callback) {
   }).exec(function(err, users) {
     callback(users);
   });
-};
+}
 
 function relatives(relation) {
   return function(user, res, next) {
@@ -109,7 +109,7 @@ module.exports = {
       bio: req.param('bio'),
       location: req.param('location'),
       website: req.param('website')
-    }
+    };
 
     if (req.param('password')) {
       if (req.param('password') == req.param('password_confirmation')) {

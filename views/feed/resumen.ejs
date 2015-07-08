@@ -1,0 +1,32 @@
+<div class="container" style="margin-top: 25px;">
+  <div class="row">
+
+    <div class="col-xs-6 feed-box" style="
+        height: 820px;
+        overflow: auto;
+      ">
+      <%- partial('../tweet/index.ejs', data) %>
+    </div>
+
+    <div class="col-xs-6">
+
+      <div class="row feed-box" style="
+        height: 400px;
+        overflow: auto;
+      ">
+        <div class="text-center"><h4>Alta Prioridad</h4></div>
+        <%- partial('../tweet/tweetAlta.ejs', data) %>
+      </div>
+
+      <div class="row feed-box" style="
+        height: 400px;
+        overflow: auto;
+      ">
+        <div class="text-center"><h4>Media Prioridad</h4></div>
+        <%- partial('../tweet/tweetMedia.ejs', data) %>
+      </div>
+
+    </div>
+
+  </div>
+</div>
