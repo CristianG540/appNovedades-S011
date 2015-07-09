@@ -15,32 +15,58 @@ module.exports = {
   },
   recoverPass: function(req, res, next){
 
-    var callback = function (err, user) {
+    var sendRecoverLink = function(){};
+
+    // Valido si el texto ingresado por el usario en el campo de recuperacion fue un correo o un tecto normal
+    Emailaddresses.validate({
+      string: req.param('name_email'),
+    }).exec({
+      // An unexpected error occurred.
+      error: function (err) {
+        if(err){ return res.negotiate(err); }
+      },
+      // The provided string is not an email address.
+      invalid: function () {
+        User.findOne({username: req.param('name_email')}).exec(sendRecoverLink);
+      },
+      // OK.
+      success: function () {
+        User.findOne({email: req.param('name_email')}).exec(sendRecoverLink);
+      }
+    });
+
+    /**
+     * Primero crea un hash aleatorio y una fecha de vencimiento para dicho hash
+     * y despues se los asigna al usuario del cual se desea cambiar la contrasena
+     * despues de esto le envio un correo al usuario con un link formado por dicho hash
+     * de esta manera puedo permitir q el usuario se cree una contrasena nueva.
+     */
+    sendRecoverLink = function (err, user) {
 
       if(err){ return res.negotiate(err); }
       if(!user){ return res.notFound(); }
 
       async.auto({
         token: function (cb) {
+
           crypto.randomBytes(20, function(err, buf) {
+            if(err){ return res.negotiate(err); }
+
             var token = buf.toString('hex');
             user.resetPasswordToken = token;
             user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
-
-            if(err){ return res.negotiate(err); }
 
             user.save(function(errUsr, user) {
               cb(errUsr, token);
             });
 
           });
+
         }
       },
       function allDone(err, results) {
 
-        if (err) {
-          return res.serverError(err);
-        }
+        if (err) { return res.serverError(err); }
 
         Mandrill.sendTemplateEmail({
           apiKey: "OonTnoExdD95f26TfHQYiA",
@@ -102,23 +128,6 @@ module.exports = {
       });
 
     };
-
-    Emailaddresses.validate({
-      string: req.param('name_email'),
-    }).exec({
-      // An unexpected error occurred.
-      error: function (err) {
-        if(err){ return res.negotiate(err); }
-      },
-      // The provided string is not an email address.
-      invalid: function () {
-        User.findOne({username: req.param('name_email')}).exec(callback);
-      },
-      // OK.
-      success: function () {
-        User.findOne({email: req.param('name_email')}).exec(callback);
-      }
-    });
 
   },
   resetIndex: function (req, res, next) {
